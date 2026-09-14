@@ -2,130 +2,194 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAPTCHA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAYUZA Website</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #dff6ff, #f7ddff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #dff6ff, #f7ddff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .captcha-box {
-      width: 360px;
-      background: white;
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.15);
-      text-align: center;
-    }
+.box {
+  width: 380px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  text-align: center;
+}
 
-    .captcha-box h2 {
-      margin-top: 0;
-      color: #333;
-    }
+h2 {
+  color: #333;
+}
 
-    .captcha-box p {
-      color: #666;
-      margin-bottom: 25px;
-    }
+p {
+  color: #666;
+}
 
-    .check {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      cursor: pointer;
-      text-align: left;
-      background: #fafafa;
-    }
+.check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fafafa;
+  text-align: left;
+}
 
-    .check input {
-      width: 22px;
-      height: 22px;
-      cursor: pointer;
-    }
+.check input {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
 
-    .loading {
-      display: none;
-      margin-top: 20px;
-      color: #777;
-    }
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #8b5cf6;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    #main {
-      display: none;
-      text-align: center;
-    }
+button:hover {
+  opacity: 0.9;
+}
 
-    #main h1 {
-      font-size: 45px;
-      color: #333;
-    }
+.question {
+  display: none;
+}
 
-    #main p {
-      font-size: 20px;
-      color: #555;
-    }
-  </style>
+.option {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: #fafafa;
+  color: #333;
+  cursor: pointer;
+}
+
+.option:hover {
+  border-color: #8b5cf6;
+}
+
+.error {
+  color: #e53935;
+  display: none;
+  margin-top: 10px;
+}
+
+#main {
+  display: none;
+  text-align: center;
+}
+
+#main h1 {
+  font-size: 45px;
+  color: #333;
+}
+
+#main p {
+  font-size: 20px;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- CAPTCHA -->
-  <div class="captcha-box" id="captcha">
-    <h2>🔒 CAPTCHA</h2>
+<!-- CAPTCHA -->
+<div class="box" id="captcha">
+  <h2>🔒 CAPTCHA</h2>
+  <p>Saytga kirish uchun CAPTCHA'dan o'ting</p>
 
-    <p>Saytga kirish uchun CAPTCHA'dan o'ting</p>
+  <label class="check">
+    <input type="checkbox" id="robotCheck">
+    <span>Men robot emasman</span>
+  </label>
+</div>
 
-    <label class="check">
-      <input type="checkbox" id="robotCheck">
-      <span>Men robot emasman</span>
-    </label>
 
-    <div class="loading" id="loading">
-      Tekshirilmoqda... ⏳
+<!-- SAVOLLAR -->
+<div class="box question" id="questions">
+
+  <!-- 1-SAVOL -->
+  <div id="q1">
+    <h2>❓ 1-savol</h2>
+    <p>Femboy zo‘rmi yoki tomboy?</p>
+
+    <button onclick="answer(1, 'femboy')">Femboy</button>
+    <button onclick="answer(1, 'tomboy')">Tomboy</button>
+
+    <div class="error" id="error1">
+      ❌ Noto‘g‘ri javob!
     </div>
   </div>
 
-  <!-- ASOSIY SAYT -->
-  <div id="main">
-    <h1>🎉 Xush kelibsiz!</h1>
-    <p>CAPTCHA'dan muvaffaqiyatli o'tdingiz.</p>
+
+  <!-- 2-SAVOL -->
+  <div id="q2" style="display:none;">
+    <h2>❓ 2-savol</h2>
+    <p>Qaysi nik to‘g‘ri?</p>
+
+    <button onclick="answer(2, 'kayuza')">1️⃣ KAYUZA</button>
+    <button onclick="answer(2, 'percia')">2️⃣ PERCIA</button>
+
+    <div class="error" id="error2">
+      ❌ Noto‘g‘ri javob!
+    </div>
   </div>
 
-  <script>
-    const checkbox = document.getElementById("robotCheck");
-    const captcha = document.getElementById("captcha");
-    const loading = document.getElementById("loading");
-    const main = document.getElementById("main");
 
-    checkbox.addEventListener("change", function () {
+  <!-- 3-SAVOL -->
+  <div id="q3" style="display:none;">
+    <h2>❓ 3-savol</h2>
+    <p>KAYUZANI yoqtirgan VTuber kim?</p>
 
-      if (checkbox.checked) {
+    <button onclick="answer(3, 'manta')">1️⃣ Manta</button>
+    <button onclick="answer(3, 'filian')">2️⃣ Filian</button>
 
-        loading.style.display = "block";
+    <div class="error" id="error3">
+      ❌ Noto‘g‘ri javob!
+    </div>
+  </div>
 
-        setTimeout(function () {
-          captcha.style.display = "none";
-          main.style.display = "block";
-        }, 1200);
+</div>
 
-      }
-    });
-  </script>
 
-</body>
-</html>
+<!-- ASOSIY SAYT -->
+<div class="box" id="main">
+  <h1>🎉 KAYUZA</h1>
+  <p>CAPTCHA va barcha savollardan muvaffaqiyatli o'tdingiz! 🔥</p>
+</div>
+
+
+<script>
+
+const checkbox = document.getElementById("robotCheck");
+
+checkbox.addEventListener("change", function() {
+
+  if (checkbox.checked) {
+
+    document.getElementById("captcha").style.display = "none";
+    document.getElementById("
 ```
