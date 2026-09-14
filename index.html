@@ -1,0 +1,131 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAPTCHA</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #dff6ff, #f7ddff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .captcha-box {
+      width: 360px;
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .captcha-box h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .captcha-box p {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      background: #fafafa;
+    }
+
+    .check input {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 20px;
+      color: #777;
+    }
+
+    #main {
+      display: none;
+      text-align: center;
+    }
+
+    #main h1 {
+      font-size: 45px;
+      color: #333;
+    }
+
+    #main p {
+      font-size: 20px;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CAPTCHA -->
+  <div class="captcha-box" id="captcha">
+    <h2>🔒 CAPTCHA</h2>
+
+    <p>Saytga kirish uchun CAPTCHA'dan o'ting</p>
+
+    <label class="check">
+      <input type="checkbox" id="robotCheck">
+      <span>Men robot emasman</span>
+    </label>
+
+    <div class="loading" id="loading">
+      Tekshirilmoqda... ⏳
+    </div>
+  </div>
+
+  <!-- ASOSIY SAYT -->
+  <div id="main">
+    <h1>🎉 Xush kelibsiz!</h1>
+    <p>CAPTCHA'dan muvaffaqiyatli o'tdingiz.</p>
+  </div>
+
+  <script>
+    const checkbox = document.getElementById("robotCheck");
+    const captcha = document.getElementById("captcha");
+    const loading = document.getElementById("loading");
+    const main = document.getElementById("main");
+
+    checkbox.addEventListener("change", function () {
+
+      if (checkbox.checked) {
+
+        loading.style.display = "block";
+
+        setTimeout(function () {
+          captcha.style.display = "none";
+          main.style.display = "block";
+        }, 1200);
+
+      }
+    });
+  </script>
+
+</body>
+</html>
+```
