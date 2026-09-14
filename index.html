@@ -4,112 +4,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KAYUZA Website</title>
+<title>KAYUZA CAPTCHA</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #dff6ff, #f7ddff);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dff6ff, #f7ddff);
 }
 
 .box {
-  width: 380px;
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-  text-align: center;
-}
-
-h2 {
-  color: #333;
-}
-
-p {
-  color: #666;
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .check {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  cursor: pointer;
-  background: #fafafa;
-  text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
 }
 
 .check input {
-  width: 22px;
-  height: 22px;
-  cursor: pointer;
+    width: 22px;
+    height: 22px;
 }
 
 button {
-  width: 100%;
-  padding: 13px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 10px;
-  background: #8b5cf6;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+    width: 100%;
+    padding: 13px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    background: #8b5cf6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 button:hover {
-  opacity: 0.9;
+    opacity: 0.85;
 }
 
 .question {
-  display: none;
-}
-
-.option {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  background: #fafafa;
-  color: #333;
-  cursor: pointer;
-}
-
-.option:hover {
-  border-color: #8b5cf6;
+    display: none;
 }
 
 .error {
-  color: #e53935;
-  display: none;
-  margin-top: 10px;
+    color: red;
+    margin-top: 10px;
+    display: none;
 }
 
-#main {
-  display: none;
-  text-align: center;
-}
-
-#main h1 {
-  font-size: 45px;
-  color: #333;
-}
-
-#main p {
-  font-size: 20px;
+#success {
+    display: none;
 }
 </style>
 </head>
@@ -118,78 +78,105 @@ button:hover {
 
 <!-- CAPTCHA -->
 <div class="box" id="captcha">
-  <h2>🔒 CAPTCHA</h2>
-  <p>Saytga kirish uchun CAPTCHA'dan o'ting</p>
+    <h2>🔒 CAPTCHA</h2>
 
-  <label class="check">
-    <input type="checkbox" id="robotCheck">
-    <span>Men robot emasman</span>
-  </label>
+    <p>Saytga kirish uchun CAPTCHA'dan o'ting</p>
+
+    <label class="check">
+        <input type="checkbox" onclick="openQuestions()">
+        <span>Men robot emasman</span>
+    </label>
 </div>
 
 
 <!-- SAVOLLAR -->
 <div class="box question" id="questions">
 
-  <!-- 1-SAVOL -->
-  <div id="q1">
-    <h2>❓ 1-savol</h2>
-    <p>Femboy zo‘rmi yoki tomboy?</p>
+    <!-- 1 -->
+    <div id="q1">
+        <h2>❓ 1-savol</h2>
+        <p>Femboy zo‘rmi yoki tomboy?</p>
 
-    <button onclick="answer(1, 'femboy')">Femboy</button>
-    <button onclick="answer(1, 'tomboy')">Tomboy</button>
+        <button onclick="checkAnswer(1, 'femboy')">
+            Femboy
+        </button>
 
-    <div class="error" id="error1">
-      ❌ Noto‘g‘ri javob!
+        <button onclick="checkAnswer(1, 'tomboy')">
+            Tomboy
+        </button>
+
+        <p class="error" id="error1">❌ Noto‘g‘ri!</p>
     </div>
-  </div>
 
 
-  <!-- 2-SAVOL -->
-  <div id="q2" style="display:none;">
-    <h2>❓ 2-savol</h2>
-    <p>Qaysi nik to‘g‘ri?</p>
+    <!-- 2 -->
+    <div id="q2" style="display:none;">
+        <h2>❓ 2-savol</h2>
+        <p>Qaysi nik to‘g‘ri?</p>
 
-    <button onclick="answer(2, 'kayuza')">1️⃣ KAYUZA</button>
-    <button onclick="answer(2, 'percia')">2️⃣ PERCIA</button>
+        <button onclick="checkAnswer(2, 'kayuza')">
+            1️⃣ KAYUZA
+        </button>
 
-    <div class="error" id="error2">
-      ❌ Noto‘g‘ri javob!
+        <button onclick="checkAnswer(2, 'percia')">
+            2️⃣ PERCIA
+        </button>
+
+        <p class="error" id="error2">❌ Noto‘g‘ri!</p>
     </div>
-  </div>
 
 
-  <!-- 3-SAVOL -->
-  <div id="q3" style="display:none;">
-    <h2>❓ 3-savol</h2>
-    <p>KAYUZANI yoqtirgan VTuber kim?</p>
+    <!-- 3 -->
+    <div id="q3" style="display:none;">
+        <h2>❓ 3-savol</h2>
+        <p>KAYUZANI yoqtirgan VTuber kim?</p>
 
-    <button onclick="answer(3, 'manta')">1️⃣ Manta</button>
-    <button onclick="answer(3, 'filian')">2️⃣ Filian</button>
+        <button onclick="checkAnswer(3, 'manta')">
+            1️⃣ Manta
+        </button>
 
-    <div class="error" id="error3">
-      ❌ Noto‘g‘ri javob!
+        <button onclick="checkAnswer(3, 'filian')">
+            2️⃣ Filian
+        </button>
+
+        <p class="error" id="error3">❌ Noto‘g‘ri!</p>
     </div>
-  </div>
 
 </div>
 
 
-<!-- ASOSIY SAYT -->
-<div class="box" id="main">
-  <h1>🎉 KAYUZA</h1>
-  <p>CAPTCHA va barcha savollardan muvaffaqiyatli o'tdingiz! 🔥</p>
+<!-- MUVAFFAQIYAT -->
+<div class="box" id="success">
+    <h1>🎉 KAYUZA</h1>
+    <p>Hammasi to‘g‘ri! 🔥</p>
+    <p>Saytga xush kelibsiz!</p>
 </div>
 
 
 <script>
 
-const checkbox = document.getElementById("robotCheck");
-
-checkbox.addEventListener("change", function() {
-
-  if (checkbox.checked) {
+function openQuestions() {
 
     document.getElementById("captcha").style.display = "none";
-    document.getElementById("
+
+    document.getElementById("questions").style.display = "block";
+}
+
+
+function checkAnswer(question, answer) {
+
+    const correct = {
+        1: "femboy",
+        2: "kayuza",
+        3: "filian"
+    };
+
+    if (answer === correct[question]) {
+
+        document.getElementById("q" + question).style.display = "none";
+
+        if (question < 3) {
+
+            document.getElementById("q" + (question + 1))
 ```
+
